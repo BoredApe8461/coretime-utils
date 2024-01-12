@@ -1,14 +1,15 @@
 {
   "name": "coretime-utils",
-  "version": "0.1.0",
+  "version": "0.1.9",
   "description": "An npm package containing types and constants that are commonly reused in regarding Coretime.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "types": "dist/cjs/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "dev": "npx ts-node src/main.ts",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build": "npm run build:cjs && npm run build:esm",
     "prettier": "prettier --write .",
-    "lint": "eslint '**/*.ts'",
+    "lint": "eslint 'src/**/*.ts'",
     "test": "jest"
   },
   "files": [
@@ -27,5 +28,8 @@
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@polkadot/util": "^12.6.2"
   }
 }

@@ -21,7 +21,7 @@ jobs:
 
       # Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: npm i
 
       # Run linter
       - name: Run Linter
@@ -29,7 +29,7 @@ jobs:
 
       # Check Prettier
       - name: Check Prettier
-        run: npm run prettier-check
+        run: npm run prettier
 
       # Run tests
       - name: Run Tests
