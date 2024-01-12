@@ -47,7 +47,7 @@ export class CoreMask {
     return new CoreMask(`0x${hexMask}`);
   }
 
-  countZeros(): number {
+  public countZeros(): number {
     let count = 0;
     for (let i = 2; i < this.mask.length; ++i) {
       let v = parseInt(this.mask.slice(i, i + 1), 16);
@@ -59,7 +59,7 @@ export class CoreMask {
     return count;
   }
 
-  countOnes(): number {
+  public countOnes(): number {
     let count = 0;
     for (let i = 2; i < this.mask.length; ++i) {
       let v = parseInt(this.mask.slice(i, i + 1), 16);
@@ -71,7 +71,7 @@ export class CoreMask {
     return count;
   }
 
-  toBin(): string {
+  public toBin(): string {
     let bin = '';
     for (let i = 2; i < this.mask.length; ++i) {
       const v = parseInt(this.mask.slice(i, i + 1), 16);
