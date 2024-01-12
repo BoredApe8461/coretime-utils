@@ -108,15 +108,14 @@ export class Region {
    * `regionId` needs to be represented as a u128.
    *
    * @param api The API object used to encode the regionId fields.
-   * @param regionId The RegionId object to be encoded.
    * @returns The encoded regionId as a BigNumber (BN)
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  encodeRegionId(api: any, regionId: RegionId): BN {
-    const encodedBegin = api.createType('u32', regionId.begin).toHex().substring(2);
-    const encodedCore = api.createType('u16', regionId.core).toHex().substring(2);
+  getEncodedRegionId(api: any): BN {
+    const encodedBegin = api.createType('u32', this.regionId.begin).toHex().substring(2);
+    const encodedCore = api.createType('u16', this.regionId.core).toHex().substring(2);
 
-    const rawRegionId = encodedBegin + encodedCore + regionId.mask.getMask().substring(2);
+    const rawRegionId = encodedBegin + encodedCore + this.regionId.mask.getMask().substring(2);
 
     return new BN(rawRegionId, 16);
   }

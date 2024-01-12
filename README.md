@@ -1,6 +1,6 @@
 # coretime-utils
 
-An npm package containing types and constants that are commonly reused in regarding to Coretime
+An npm package containing types and constants that are commonly reused in relation to Coretime.
 
 ### Usage
 
@@ -13,5 +13,5 @@ npm i coretime-utils
 Types can be imported directly from the package, e.g.
 
 ```js
-import { CoreMask } from "coretime-utils";
+import { CoreMask } from 'coretime-utils';
 ```
