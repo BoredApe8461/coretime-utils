@@ -4,6 +4,10 @@
   "description": "An npm package containing types and constants that are commonly reused in regarding Coretime.",
   "main": "dist/cjs/index.js",
   "types": "dist/cjs/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RegionX-Labs/coretime-utils.git"
+  },
   "scripts": {
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json",
