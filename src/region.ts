@@ -95,6 +95,7 @@ export class Region {
    * @param regionId The RegionId object to be encoded.
    * @returns The encoded regionId as a BigNumber (BN)
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   encodeRegionId(api: any, regionId: RegionId): BN {
     const encodedBegin = api.createType('u32', regionId.begin).toHex().substring(2);
     const encodedCore = api.createType('u16', regionId.core).toHex().substring(2);
