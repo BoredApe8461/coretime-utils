@@ -1,4 +1,3 @@
-import { ApiPromise } from '@polkadot/api';
 import { CoreMask, CoreIndex, Timeslice, Balance } from '.';
 import { BN } from '@polkadot/util';
 
@@ -96,7 +95,7 @@ export class Region {
    * @param regionId The RegionId object to be encoded.
    * @returns The encoded regionId as a BigNumber (BN)
    */
-  encodeRegionId(api: ApiPromise, regionId: RegionId): BN {
+  encodeRegionId(api: any, regionId: RegionId): BN {
     const encodedBegin = api.createType('u32', regionId.begin).toHex().substring(2);
     const encodedCore = api.createType('u16', regionId.core).toHex().substring(2);
 
