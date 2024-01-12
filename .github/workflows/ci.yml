@@ -1,0 +1,36 @@
+name: coretime-utils CI
+
+on:
+    push:
+      branches: [main]
+    pull_request:
+      branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # Setup Node.js environment
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14' # You can specify your Node.js version here
+
+    # Install dependencies
+    - name: Install dependencies
+      run: npm install
+
+    # Run linter
+    - name: Run Linter
+      run: npm run lint
+
+    # Check Prettier
+    - name: Check Prettier
+      run: npm run prettier-check
+
+    # Run tests
+    - name: Run Tests
+      run: npm test
