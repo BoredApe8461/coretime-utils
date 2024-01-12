@@ -39,6 +39,22 @@ export class Region {
   }
 
   /**
+   * RegionId of the Region.
+   * @returns The RegionId of the current Region instance.
+   */
+  public getRegionId(): RegionId {
+    return this.regionId;
+  }
+
+  /**
+   * RegionRecord of the Region.
+   * @returns The RegionRecord of the current Region instance.
+   */
+  public getRegionRecord(): RegionRecord {
+    return this.regionRecord;
+  }
+
+  /**
    * Gets the beginning timeslice of the region.
    * @returns The starting timeslice.
    */
