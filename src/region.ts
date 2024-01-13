@@ -1,5 +1,14 @@
-import { CoreMask, CoreIndex, Timeslice, Balance } from '.';
+import { CoreMask, CoreIndex, Timeslice, Balance, RawRegionId } from '.';
 import { BN } from '@polkadot/util';
+
+export type OnChainRegionId = {
+  // The timeslice at which the region starts.
+  begin: Timeslice;
+  // The index of the relay chain Core on which this Region will be scheduled.
+  core: CoreIndex;
+  // The regularity parts in which this Region will be scheduled.
+  mask: string;
+};
 
 export type RegionId = {
   // The timeslice at which the region starts.
@@ -44,6 +53,18 @@ export class Region {
    */
   public getRegionId(): RegionId {
     return this.regionId;
+  }
+
+  /**
+   * Onchain broker pallet representation of RegionId.
+   * @returns The RegionId of the current Region instance.
+   */
+  public getOnChainRegionId(): OnChainRegionId {
+    return {
+      begin: this.getBegin(),
+      core: this.getCore(),
+      mask: this.getMask().getMask(),
+    };
   }
 
   /**
@@ -103,15 +124,15 @@ export class Region {
   }
 
   /**
-   * Encodes the `regionId` into a BigNumber (BN) format. This method is used for
-   * interactions with smart contracts or when conducting cross-chain transfers, where
+   * Encodes the `regionId` into a BigNumber (BN) format. This is used for interacting
+   * with the xc-regions contract or when conducting cross-chain transfers, where
    * `regionId` needs to be represented as a u128.
    *
    * @param api The API object used to encode the regionId fields.
    * @returns The encoded regionId as a BigNumber (BN)
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getEncodedRegionId(api: any): BN {
+  getEncodedRegionId(api: any): RawRegionId {
     const encodedBegin = api.createType('u32', this.regionId.begin).toHex().substring(2);
     const encodedCore = api.createType('u16', this.regionId.core).toHex().substring(2);
 

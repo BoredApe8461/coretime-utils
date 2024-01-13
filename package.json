@@ -1,6 +1,6 @@
 {
   "name": "coretime-utils",
-  "version": "0.1.9",
+  "version": "0.2.3",
   "description": "An npm package containing types and constants that are commonly reused in regarding Coretime.",
   "main": "dist/cjs/index.js",
   "types": "dist/cjs/index.d.ts",
