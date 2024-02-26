@@ -1,5 +1,7 @@
 import { BN } from '@polkadot/util';
 
+export type Percentage = number; // Percentage value between 0 and 1
+
 export type Timeslice = number;
 
 // Index of a Polkadot Core.
@@ -12,6 +14,11 @@ export type Balance = number;
 
 // `RegionId` encoded into a BigNumber (BN).
 export type RawRegionId = BN;
+
+export type ContextData = {
+  timeslicePeriod: number;
+  relayBlockNumber: number;
+};
 
 export const Id = {
   _enum: {

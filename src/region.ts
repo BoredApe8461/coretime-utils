@@ -1,4 +1,4 @@
-import { CoreMask, CoreIndex, Timeslice, Balance, RawRegionId } from '.';
+import { CoreMask, CoreIndex, Timeslice, Balance, RawRegionId, Percentage, ContextData } from '.';
 import { BN } from '@polkadot/util';
 
 export type OnChainRegionId = {
@@ -124,6 +124,34 @@ export class Region {
   }
 
   /**
+   * Calculates the percentage of the region that got consumed so far with the
+   * given context.
+   * @returns The percentage consumed so far.
+   */
+  public consumed(context: ContextData): Percentage {
+    // rough estimation
+    const beginBlockHeight = context.timeslicePeriod * this.getBegin();
+    const endBlockHeight = context.timeslicePeriod * this.getEnd();
+    const durationInBlocks = endBlockHeight - beginBlockHeight;
+    
+    let consumed =
+      (context.relayBlockNumber - beginBlockHeight) / durationInBlocks;
+    if (consumed < 0) {
+      // This means that the region hasn't yet started.
+      consumed = 0;
+    }
+
+    return consumed;
+  }
+
+  /**
+   * @returns The percentage of a core's resources that the region 'occupies'
+   */
+  public coreOccupancy(): Percentage {
+    return this.getMask().countOnes() / 80;
+  }
+
+  /**
    * Encodes the `regionId` into a BigNumber (BN) format. This is used for interacting
    * with the xc-regions contract or when conducting cross-chain transfers, where
    * `regionId` needs to be represented as a u128.
@@ -132,7 +160,7 @@ export class Region {
    * @returns The encoded regionId as a BigNumber (BN)
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getEncodedRegionId(api: any): RawRegionId {
+  public getEncodedRegionId(api: any): RawRegionId {
     const encodedBegin = api.createType('u32', this.regionId.begin).toHex().substring(2);
     const encodedCore = api.createType('u16', this.regionId.core).toHex().substring(2);
 
