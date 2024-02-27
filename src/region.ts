@@ -1,4 +1,13 @@
-import { CoreMask, CoreIndex, Timeslice, Balance, RawRegionId, Percentage, ContextData } from '.';
+import {
+  CoreMask,
+  CoreIndex,
+  Timeslice,
+  Balance,
+  RawRegionId,
+  Percentage,
+  ContextData,
+  MetadataVersion,
+} from '.';
 import { BN } from '@polkadot/util';
 
 export type OnChainRegionId = {
@@ -36,15 +45,19 @@ export enum RegionOrigin {
 export class Region {
   private regionId: RegionId;
   private regionRecord: RegionRecord;
+  private metadataVersion: MetadataVersion;
 
   /**
    * Constructs a new Region instance.
    * @param regionId The unique identifier of the region.
    * @param regionRecord The record details of the region.
+   * @param metadataVersion The version of the region metadata. 
+   * In case it is not a xc-region, it should be 0.
    */
-  constructor(regionId: RegionId, regionRecord: RegionRecord) {
+  constructor(regionId: RegionId, regionRecord: RegionRecord, metadataVersion: MetadataVersion) {
     this.regionId = regionId;
     this.regionRecord = regionRecord;
+    this.metadataVersion = metadataVersion;
   }
 
   /**
@@ -73,6 +86,14 @@ export class Region {
    */
   public getRegionRecord(): RegionRecord {
     return this.regionRecord;
+  }
+
+  /**
+   * Gets the version of the region metadata.
+   * @returns If not xc-region this should always be 0.
+   */
+  public getMetadataVersion(): MetadataVersion {
+    return this.metadataVersion;
   }
 
   /**
@@ -133,9 +154,8 @@ export class Region {
     const beginBlockHeight = context.timeslicePeriod * this.getBegin();
     const endBlockHeight = context.timeslicePeriod * this.getEnd();
     const durationInBlocks = endBlockHeight - beginBlockHeight;
-    
-    let consumed =
-      (context.relayBlockNumber - beginBlockHeight) / durationInBlocks;
+
+    let consumed = (context.relayBlockNumber - beginBlockHeight) / durationInBlocks;
     if (consumed < 0) {
       // This means that the region hasn't yet started.
       consumed = 0;

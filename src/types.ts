@@ -4,6 +4,8 @@ export type Percentage = number; // Percentage value between 0 and 1
 
 export type Timeslice = number;
 
+export type MetadataVersion = number;
+
 // Index of a Polkadot Core.
 export type CoreIndex = number;
 
