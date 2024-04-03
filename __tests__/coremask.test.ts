@@ -9,20 +9,20 @@ describe('CoreMask utils work', () => {
   });
 
   test('fromChunk works', () => {
-    expect(CoreMask.fromChunk(40, 60).getMask()).toEqual('0x0000000000fffff00000');
+    expect(CoreMask.fromChunk(40, 60).getRaw()).toEqual('0x0000000000fffff00000');
   });
 
   test('fromBin works', () => {
     expect(
       CoreMask.fromBin(
         '11111111111111111111111111111111111111111111111111111111111111111111111111111111',
-      ).getMask(),
+      ).getRaw(),
     ).toEqual(COMPLETE_MASK);
 
     expect(
       CoreMask.fromBin(
         '00000000000000000000000000000000000000000000000000000000000000000000000000000000',
-      ).getMask(),
+      ).getRaw(),
     ).toEqual(VOID_MASK);
   });
 

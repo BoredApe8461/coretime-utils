@@ -76,7 +76,7 @@ export class Region {
     return {
       begin: this.getBegin(),
       core: this.getCore(),
-      mask: this.getMask().getMask(),
+      mask: this.getMask().getRaw(),
     };
   }
 
@@ -184,7 +184,7 @@ export class Region {
     const encodedBegin = api.createType('u32', this.regionId.begin).toHex().substring(2);
     const encodedCore = api.createType('u16', this.regionId.core).toHex().substring(2);
 
-    const rawRegionId = encodedBegin + encodedCore + this.regionId.mask.getMask().substring(2);
+    const rawRegionId = encodedBegin + encodedCore + this.regionId.mask.getRaw().substring(2);
 
     return new BN(rawRegionId, 16);
   }
