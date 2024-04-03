@@ -51,7 +51,7 @@ export class Region {
    * Constructs a new Region instance.
    * @param regionId The unique identifier of the region.
    * @param regionRecord The record details of the region.
-   * @param metadataVersion The version of the region metadata. 
+   * @param metadataVersion The version of the region metadata.
    * In case it is not a xc-region, it should be 0.
    */
   constructor(regionId: RegionId, regionRecord: RegionRecord, metadataVersion: MetadataVersion) {
@@ -76,7 +76,7 @@ export class Region {
     return {
       begin: this.getBegin(),
       core: this.getCore(),
-      mask: this.getMask().getRaw(),
+      mask: this.getMask().toRawHex(),
     };
   }
 
@@ -184,7 +184,7 @@ export class Region {
     const encodedBegin = api.createType('u32', this.regionId.begin).toHex().substring(2);
     const encodedCore = api.createType('u16', this.regionId.core).toHex().substring(2);
 
-    const rawRegionId = encodedBegin + encodedCore + this.regionId.mask.getRaw().substring(2);
+    const rawRegionId = encodedBegin + encodedCore + this.regionId.mask.toRawHex().substring(2);
 
     return new BN(rawRegionId, 16);
   }
