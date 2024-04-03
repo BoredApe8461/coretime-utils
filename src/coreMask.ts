@@ -4,7 +4,7 @@ export const COMPLETE_MASK = '0xffffffffffffffffffff'; // hex encoded 80 bit bit
 export class CoreMask {
   private mask: string;
 
-  getMask(): string {
+  toRawHex(): string {
     return this.mask;
   }
 
