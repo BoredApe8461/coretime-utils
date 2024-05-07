@@ -1,4 +1,14 @@
-import { COMPLETE_MASK, VOID_MASK, completeMask, countMaskOnes, countMaskZeros, maskFromBin, maskFromChunk, maskToBin, voidMask } from '../src';
+import {
+  COMPLETE_MASK,
+  VOID_MASK,
+  completeMask,
+  countMaskOnes,
+  countMaskZeros,
+  maskFromBin,
+  maskFromChunk,
+  maskToBin,
+  voidMask,
+} from '../src';
 
 describe('CoreMask utils work', () => {
   test('fromChunk works', () => {
@@ -13,7 +23,7 @@ describe('CoreMask utils work', () => {
     ).toEqual(COMPLETE_MASK);
 
     expect(
-     maskFromBin(
+      maskFromBin(
         '00000000000000000000000000000000000000000000000000000000000000000000000000000000',
       ),
     ).toEqual(VOID_MASK);

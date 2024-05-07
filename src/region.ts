@@ -1,11 +1,4 @@
-import {
-  CoreIndex,
-  Timeslice,
-  Balance,
-  Percentage,
-  ContextData,
-  countMaskOnes,
-} from '.';
+import { CoreIndex, Timeslice, Balance, Percentage, ContextData, countMaskOnes } from '.';
 
 export type OnChainRegionId = {
   // The timeslice at which the region starts.

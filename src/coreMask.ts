@@ -31,7 +31,7 @@ export function countMaskZeros(mask: string): number {
       v >>= 1;
     }
   }
-  return count; 
+  return count;
 }
 
 export function countMaskOnes(mask: string): number {
