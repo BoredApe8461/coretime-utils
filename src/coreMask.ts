@@ -5,6 +5,7 @@ export function completeMask(): string {
   return COMPLETE_MASK;
 }
 
+
 export function voidMask(): string {
   return VOID_MASK;
 }
