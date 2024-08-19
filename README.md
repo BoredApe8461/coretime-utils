@@ -13,5 +13,5 @@ npm i coretime-utils
 Types can be imported directly from the package, e.g.
 
 ```js
-import { CoreMask } from 'coretime-utils';
+import { Region } from 'coretime-utils';
 ```

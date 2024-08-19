@@ -1,14 +1,4 @@
-import {
-  CoreMask,
-  CoreIndex,
-  Timeslice,
-  Balance,
-  RawRegionId,
-  Percentage,
-  ContextData,
-  MetadataVersion,
-} from '.';
-import { BN } from '@polkadot/util';
+import { CoreIndex, Timeslice, Balance, Percentage, ContextData, countMaskOnes } from '.';
 
 export type OnChainRegionId = {
   // The timeslice at which the region starts.
@@ -25,7 +15,7 @@ export type RegionId = {
   // The index of the relay chain Core on which this Region will be scheduled.
   core: CoreIndex;
   // The regularity parts in which this Region will be scheduled.
-  mask: CoreMask;
+  mask: string;
 };
 
 export type RegionRecord = {
@@ -45,19 +35,16 @@ export enum RegionOrigin {
 export class Region {
   private regionId: RegionId;
   private regionRecord: RegionRecord;
-  private metadataVersion: MetadataVersion;
 
   /**
    * Constructs a new Region instance.
    * @param regionId The unique identifier of the region.
    * @param regionRecord The record details of the region.
-   * @param metadataVersion The version of the region metadata.
    * In case it is not a xc-region, it should be 0.
    */
-  constructor(regionId: RegionId, regionRecord: RegionRecord, metadataVersion: MetadataVersion) {
+  constructor(regionId: RegionId, regionRecord: RegionRecord) {
     this.regionId = regionId;
     this.regionRecord = regionRecord;
-    this.metadataVersion = metadataVersion;
   }
 
   /**
@@ -76,7 +63,7 @@ export class Region {
     return {
       begin: this.getBegin(),
       core: this.getCore(),
-      mask: this.getMask().toRawHex(),
+      mask: this.getMask(),
     };
   }
 
@@ -86,14 +73,6 @@ export class Region {
    */
   public getRegionRecord(): RegionRecord {
     return this.regionRecord;
-  }
-
-  /**
-   * Gets the version of the region metadata.
-   * @returns If not xc-region this should always be 0.
-   */
-  public getMetadataVersion(): MetadataVersion {
-    return this.metadataVersion;
   }
 
   /**
@@ -116,7 +95,7 @@ export class Region {
    * Gets the mask for the region scheduling.
    * @returns The core mask.
    */
-  public getMask(): CoreMask {
+  public getMask(): string {
     return this.regionId.mask;
   }
 
@@ -168,24 +147,6 @@ export class Region {
    * @returns The percentage of a core's resources that the region 'occupies'
    */
   public coreOccupancy(): Percentage {
-    return this.getMask().countOnes() / 80;
-  }
-
-  /**
-   * Encodes the `regionId` into a BigNumber (BN) format. This is used for interacting
-   * with the xc-regions contract or when conducting cross-chain transfers, where
-   * `regionId` needs to be represented as a u128.
-   *
-   * @param api The API object used to encode the regionId fields.
-   * @returns The encoded regionId as a BigNumber (BN)
-   */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public getEncodedRegionId(api: any): RawRegionId {
-    const encodedBegin = api.createType('u32', this.regionId.begin).toHex().substring(2);
-    const encodedCore = api.createType('u16', this.regionId.core).toHex().substring(2);
-
-    const rawRegionId = encodedBegin + encodedCore + this.regionId.mask.toRawHex().substring(2);
-
-    return new BN(rawRegionId, 16);
+    return countMaskOnes(this.getMask()) / 80;
   }
 }
